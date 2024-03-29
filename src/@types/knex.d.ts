@@ -16,10 +16,10 @@ declare module 'knex/types/tables' {
       user_id: string
       name: string
       description: string
-      created_at: Date
       is_in_diet: boolean
-
-      user: Tables['users']
+      date: number
+      created_at: Date
+      updated_at: Date
     }
   }
 }

@@ -12,7 +12,7 @@
 
 ### Checklist das Regras da Aplicação
 
-- [x] Deve ser possível criar um usuário
+- [x] Deve ser possível' criar um usuário
 - [x] Deve ser possível identificar o usuário entre as requisições
 - [x] Deve ser possível registrar uma refeição feita, com as seguintes informações:
   - [x] Nome
@@ -78,6 +78,4 @@
 
 - `GET /metrics`: Rota para recuperar as métricas de um usuário
 
-
-
-
+<h2 align="center"> Feito por Carlos Henrique ❤️</h2>

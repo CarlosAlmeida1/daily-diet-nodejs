@@ -9,27 +9,33 @@ export async function mealsRoutes(app: FastifyInstance) {
     '/',
     { preHandler: [checkSessionIdExists] },
     async (request, reply) => {
-      const createMealBodySchema = z.object({
-        name: z.string(),
-        description: z.string(),
-        isOnDiet: z.boolean(),
-        date: z.coerce.date(),
-      })
+      try {
+        const createMealBodySchema = z.object({
+          name: z.string(),
+          description: z.string(),
+          isOnDiet: z.boolean(),
+          date: z.coerce.date(),
+        })
 
-      const { name, description, isOnDiet, date } = createMealBodySchema.parse(
-        request.body,
-      )
+        const { name, description, isOnDiet, date } =
+          createMealBodySchema.parse(request.body)
 
-      await knex('meals').insert({
-        id: randomUUID(),
-        name,
-        description,
-        is_in_diet: isOnDiet,
-        date: date.getTime(),
-        user_id: request.user?.id,
-      })
+        await knex('meals').insert({
+          id: randomUUID(),
+          name,
+          description,
+          is_in_diet: isOnDiet,
+          date: date.getTime(),
+          user_id: request.user?.id,
+        })
 
-      return reply.status(201).send()
+        return reply.status(201).send()
+      } catch (err) {
+        if (err instanceof z.ZodError) {
+          return reply.status(400).send({ message: 'Invalid body params' })
+        }
+        return reply.status(500).send({ message: 'Internal server error' })
+      }
     },
   )
 
